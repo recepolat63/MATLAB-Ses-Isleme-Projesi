@@ -36,8 +36,9 @@ README.md – Bilgilendirme ve kullanım kılavuzu
 
 ## 👤 Geliştirici
 
-Recep Polat  
-GitHub: [@recepolat63](https://github.com/recepolat63)
+**Recep POLAT  
+GitHub: [@recepolat63](https://github.com/recepolat63)**
+
 
 ## 📝 Lisans
 
@@ -75,8 +76,10 @@ ses_dosyalari/ – Folder containing the audio files (to be created by the user)
 README.md – Information and user guide
 
 ## 👤 Developer
-Recep Polat
-GitHub: @recepolat63
+
+**Recep POLAT  
+GitHub: [@recepolat63](https://github.com/recepolat63)**
+
 
 ## 📝 License
 This project is open source and free to use for personal and academic purposes. For commercial use, please contact the developer.

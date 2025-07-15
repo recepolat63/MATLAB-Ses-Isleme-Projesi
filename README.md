@@ -1,4 +1,4 @@
-## TR
+## -TR-
 # MATLAB Ses Tanıma Projesi
 
 Bu proje, MATLAB ortamında geliştirilmiş bir ses tanıma sistemidir. Sistem, `.wav` formatında toplam 30 farklı ses dosyasını analiz ederek hangi sesin hangi sınıfa ait olduğunu tahmin etmeyi amaçlar. Analiz sürecinde FFT (Fast Fourier Transform), istatistiksel öznitelikler ve çok katmanlı yapay sinir ağı (patternnet) kullanılmıştır.
@@ -43,7 +43,7 @@ GitHub: [@recepolat63](https://github.com/recepolat63)
 
 Bu proje açık kaynaklıdır ve kişisel, akademik amaçlarla serbestçe kullanılabilir. Ticari kullanım için geliştiriciyle iletişime geçilmesi tavsiye edilir.
 
-## EN
+## -EN-
 
 # MATLAB Speech Recognition Project
 This project is a speech recognition system developed in the MATLAB environment. The system analyzes a total of 30 different .wav audio files to predict which class each sound belongs to. The analysis process uses FFT (Fast Fourier Transform), statistical features, and a multilayer artificial neural network (patternnet).

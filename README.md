@@ -44,6 +44,8 @@ GitHub: [@recepolat63](https://github.com/recepolat63)
 Bu proje açık kaynaklıdır ve kişisel, akademik amaçlarla serbestçe kullanılabilir. Ticari kullanım için geliştiriciyle iletişime geçilmesi tavsiye edilir.
 
 
+
+
 ## -EN-
 
 # MATLAB Speech Recognition Project

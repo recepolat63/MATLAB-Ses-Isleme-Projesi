@@ -16,7 +16,7 @@ Bu proje için MATLAB ortamında Signal Processing Toolbox ve Neural Network Too
 Proje klasörü içine `ses_dosyalari` adında bir klasör oluşturulmalı ve içine sırasıyla ses1.wav, ses2.wav ... ses30.wav dosyaları eklenmelidir. Proje klasörünün yapısı aşağıdaki gibi olmalıdır:
 
 proje_klasoru/  
-├── Ses_Tanima_Projesi.m  
+├── SesTanimaProjesi.m  
 ├── README.md  
 └── ses_dosyalari/  
   ├── ses1.wav  
@@ -58,7 +58,7 @@ Signal Processing Toolbox and Neural Network Toolbox must be installed in the MA
 Create a folder named ses_dosyalari inside the project directory and add audio files named ses1.wav, ses2.wav ... ses30.wav into it. The project folder structure should be as follows:
 
 project_folder/
-├── Speech_Recognition_Project.m
+├── SpeechRecognitionProject.m
 ├── README.md
 └── ses_dosyalari/
   ├── ses1.wav

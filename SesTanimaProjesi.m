@@ -1,0 +1,78 @@
+% Başlangıç tanımlamaları
+ozellikler = [];   % Özellik matrisi tanımlama
+dosyaSayisi = 30;   % Ses dosyası sayısını belirleme
+
+% Özellik çıkarma döngüsü
+for i = 1:dosyaSayisi   % 30 ses dosyası için döngü başlangıcı
+    [y, fs] = audioread(sprintf('ses%d.wav', i));   % ses%d.wav dosyasını okuma
+    y = mean(y, 2);   % Stereo sesi mono yapma
+    
+    % FFT hesaplama
+    Y = fft(y);   % Ses sinyalinin FFT'sini alma
+    P = abs(Y(1:floor(length(Y)/2)+1)/length(y));   % Güç spektrumu hesaplama
+    
+    % İstatistiksel özellikler
+    
+    spektralOrtalama = mean(P);   % Spektrum ortalaması
+    spektralStd = std(P);   % Spektrum standart sapması
+    spektralMax = max(P);   % En yüksek spektral değer
+    
+    % Zaman bazlı özellikler
+    rmsOzellik = rms(y);   % RMS değeri hesaplama
+    sifirGecis = mean(abs(diff(sign(y))));   % Sıfır geçiş sayısı
+    enerji = sum(y.^2);   % Sinyal enerjisi
+    
+    % Özellikleri birleştirme
+    ozellikler(i,:) = [P(1:100)' spektralOrtalama spektralStd spektralMax ...
+                       rmsOzellik sifirGecis enerji];   % Tüm özellikleri tek vektörde toplama
+end
+
+% Veri ön işleme
+ozellikler = normalize(ozellikler, 'range');   % 0-1 arası normalizasyon
+hedefler = eye(dosyaSayisi);   % Hedef matrisi oluşturma
+
+% Sinir ağı yapılandırması
+net = patternnet([150 100]);   % 150 ve 100 nöronlu katmanlar
+net.trainParam.epochs = 1000;   % Maksimum iterasyon sayısı
+net.trainParam.goal = 1e-8;   % Hedef hata
+net.trainParam.lr = 0.001;   % Öğrenme hızı
+net.trainParam.mc = 0.9;   % Momentum katsayısı
+net.trainParam.max_fail = 50;   % Maksimum başarısızlık sayısı
+
+% Veri çoğaltma
+cogaltilmisOzellikler = [ozellikler; ozellikler + 0.02 * randn(size(ozellikler))];   % Gürültülü veri ekleme
+cogaltilmisHedefler = [hedefler; hedefler];   % Çoğaltılan veri için hedefler
+
+% Eğitim ve test
+[net, ~] = train(net, cogaltilmisOzellikler', cogaltilmisHedefler');   % Ağı eğitme
+ciktilar = net(ozellikler');   % Test sonuçları alma
+[~, tahminler] = max(ciktilar);   % En yüksek olasılıklı sınıfı bulma
+
+% Sonuçların gösterimi
+dogruluk = sum(tahminler == 1:dosyaSayisi) / dosyaSayisi * 100;   % Doğruluk oranı hesaplama
+fprintf('\nDoğruluk Oranı: %.2f%%\n\n', dogruluk);   % Doğruluk yazdırma
+fprintf('Tahmin Sonuçları:\n');   % Başlık yazdırma
+fprintf('Gerçek Ses-------Tahmin Edilen\n');   % Ayıraç çizgisi
+for i = 1:dosyaSayisi   % Sonuçlar için döngü
+    fprintf('  ses%d.wav -----> ses%d.wav\n', i, tahminler(i));   % Tahminleri yazdırma
+end
+
+% Görselleştirme
+figure;   % Yeni grafik penceresi
+confusionchart(1:dosyaSayisi, tahminler);    % Karmaşıklık matrisi çizimi
+title('Karmaşıklık Matrisi');   % Grafik başlığı
+figure;   % --> FFT grafikleri için pencere
+tiledlayout(5,6,'TileSpacing','compact');   % 5x6 grid düzeni
+for i = 1:dosyaSayisi   % --> FFT grafikleri için döngü
+    [y,fs] = audioread(sprintf('ses%d.wav',i));   % Ses dosyasını okuma
+    y = mean(y,2);   % Mono'ya çevirme
+    Y = fft(y);   % FFT hesaplama
+    P = abs(Y(1:floor(length(Y)/2)+1)/length(y));   % Güç spektrumu
+    f = (0:length(P)-1)*fs/2/length(P);   % Frekans ekseni
+    
+    nexttile   % Sonraki alt grafik
+    plot(f,P);   % Spektrum çizimi
+    title(['Ses ' num2str(i)]);   % Alt grafik başlığı
+    xlim([0 fs/2]);   % X ekseni limitleri
+end
+sgtitle('FFT Spektrumları');   % Ana başlık
